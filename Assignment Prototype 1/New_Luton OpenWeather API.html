@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My weather app</title>
+  </head>
+  <body>
+	<h1>Weather in Luton</h1>
+	<p id="myParagraph">Please wait...</p>
+	<p id="theweathericon">Please wait...</p>
+	<p id="theTemp">Please wait...</p>
+	<p id="SpeedofWind">Please wait...</p>
+	<p id="theHumid">Please wait...</p>
+	<p id="thePressure">Please wait...</p>
+	<p id="time">Please wait...</p>
+	<img src="Broken Clouds Image.png" alt="Weather image" height="150" width="150">
+	
+	<script>
+	// Fetch Luton weather data from API
+fetch('https://api.openweathermap.org/data/2.5/weather?q=Luton&units=metric&appid=e1a7e78fb772d7f56894d448416f8028')
+	
+  // Convert response string to json object
+  .then(response => response.json())
+  .then(response => {
+
+    // Display whole API response in browser console (take a look at it!)
+    console.log(response);
+		
+    // Copy one element of response to our HTML paragraph
+    document.getElementById("myParagraph").innerHTML = response.weather[0].description;
+	document.getElementById("theweathericon").innerHTML = response.weather.icon;
+	document.getElementById("theTemp").innerHTML = 'Temperature: ' + response.main.temp + '°C';
+	document.getElementById("SpeedofWind").innerHTML = 'Wind of Speed: ' + response.wind.speed + ' meter/sec';
+	document.getElementById("theHumid").innerHTML = 'Humidity: ' + response.main.humidity + '%';
+	document.getElementById("thePressure").innerHTML = 'Pressure: ' + response.main.pressure + ' hPa';
+	
+	var myDate = new Date(response.dt * 1000).toDateString();
+	document.getElementById("time").innerHTML = 'Time: ' +  myDate;	
+  })
+  .catch(err => {
+    // Display errors in console
+    console.log(err);
+	});
+	</script>
+	
+
+  </body>
+</html>
